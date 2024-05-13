@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/crickbuzz_db
+    username: root
+    password: Test@123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+
+    hibernate:
+      ddl-auto: create-drop
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
