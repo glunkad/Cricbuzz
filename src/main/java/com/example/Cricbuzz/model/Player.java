@@ -18,13 +18,16 @@ public class Player {
     @Column(name = "player_id")
     private long id;
 
+    @Column(name = "name")
     private String name;
 
     @Column(name = "matches_played")
     private int matchesPlayed;
 
+    @Column(name = "runs")
     private int runs;
 
+    @Column(name = "average")
     private float average;
 
     @Column(name="strike_rate")

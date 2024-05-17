@@ -24,21 +24,9 @@ public class MatchServiceImpl implements MatchService {
 
     @Override
     public MatchDto addMatch(MatchDto matchDto) {
-        Match match = new Match();
-        match.setDate(matchDto.getDate());
-        match.setVenue(matchDto.getVenue());
-        match.setTeam1(matchDto.getTeam1());
-        match.setTeam2(matchDto.getTeam2());
-
+        Match match = mapToEntity(matchDto);
         Match newMatch = matchRepository.save(match);
-
-        MatchDto matchResponse = new MatchDto();
-        matchResponse.setId(newMatch.getId());
-        matchResponse.setDate(newMatch.getDate());
-        matchResponse.setVenue(newMatch.getVenue());
-        matchResponse.setTeam1(newMatch.getTeam1());
-        matchResponse.setTeam2(newMatch.getTeam2());
-        return matchResponse;
+        return mapToDto(newMatch);
 
     }
 
