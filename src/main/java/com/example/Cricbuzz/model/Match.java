@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,10 +26,15 @@ public class Match {
 
     private LocalDate date;
 
-    @Column(name = "team_1")
     private String team1;
 
-    @Column(name = "team_2")
     private String team2;
 
+    @ManyToMany
+    @JoinTable(
+            name = "match_squad",
+            joinColumns = @JoinColumn(name = "match_id"),
+            inverseJoinColumns = @JoinColumn(name = "team_id")
+    )
+    private List<Team> squad;
 }
