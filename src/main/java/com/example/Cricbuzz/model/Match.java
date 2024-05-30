@@ -26,9 +26,13 @@ public class Match {
 
     private LocalDate date;
 
-    private String team1;
+    @ManyToOne
+    @JoinColumn(name = "team1_id")
+    private Team team1;
 
-    private String team2;
+    @ManyToOne
+    @JoinColumn(name = "team2_id")
+    private Team team2;
 
     @ManyToMany
     @JoinTable(

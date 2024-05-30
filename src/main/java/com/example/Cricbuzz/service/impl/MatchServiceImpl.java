@@ -1,18 +1,17 @@
 package com.example.Cricbuzz.service.impl;
 
-import com.example.Cricbuzz.dto.MatchDto;
-import com.example.Cricbuzz.dto.PlayerDto;
-import com.example.Cricbuzz.dto.TeamDto;
-import com.example.Cricbuzz.dto.TeamPlayerDto;
+import com.example.Cricbuzz.dto.*;
 import com.example.Cricbuzz.exception.MatchNotFoundException;
 import com.example.Cricbuzz.model.Match;
 import com.example.Cricbuzz.model.Player;
 import com.example.Cricbuzz.model.Team;
 import com.example.Cricbuzz.repository.MatchRepository;
+import com.example.Cricbuzz.repository.TeamRepository;
 import com.example.Cricbuzz.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,10 +20,12 @@ public class MatchServiceImpl implements MatchService {
 
     private MatchRepository matchRepository;
 
+    private TeamRepository teamRepository;
 
     @Autowired
-    public MatchServiceImpl(MatchRepository matchRepository) {
+    public MatchServiceImpl(MatchRepository matchRepository, TeamRepository teamRepository) {
         this.matchRepository = matchRepository;
+        this.teamRepository = teamRepository;
     }
 
     @Override
@@ -42,9 +43,9 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public MatchDto getMatchById(long id) {
+    public MatchDetailsDto getMatchById(long id) {
         Match match = matchRepository.findById(id).orElseThrow(() -> new MatchNotFoundException("Match could not be found"));
-        return mapToDto(match);
+        return mapToMatchDetailsDto(match);
     }
 
     private MatchDto mapToDto(Match match) {
@@ -52,15 +53,27 @@ public class MatchServiceImpl implements MatchService {
         matchDto.setId(match.getId());
         matchDto.setDate(match.getDate());
         matchDto.setVenue(match.getVenue());
-        matchDto.setTeam1(match.getTeam1());
-        matchDto.setTeam2(match.getTeam2());
-        if(match.getSquad() == null){
-            match.setSquad(null);
-        } else{
-            List<TeamDto> teamDtoList = match.getSquad().stream().map((team) -> mapTeamToDto(team)).collect(Collectors.toList());
-            matchDto.setSquads(teamDtoList);
-        }
+        matchDto.setTeam1(match.getTeam1().getName());
+        matchDto.setTeam2(match.getTeam2().getName());
         return matchDto;
+    }
+
+    private MatchDetailsDto mapToMatchDetailsDto(Match match){
+        MatchDetailsDto matchDetailsDto = new MatchDetailsDto();
+        matchDetailsDto.setId(match.getId());
+        matchDetailsDto.setVenue(match.getVenue());
+        matchDetailsDto.setTeam1(match.getTeam1().getName());
+        matchDetailsDto.setTeam2(match.getTeam2().getName());
+        matchDetailsDto.setDate(match.getDate());
+
+        List<TeamDto> squads = new ArrayList<>();
+        TeamDto team1Dto = mapTeamToDto(match.getTeam1());
+        squads.add(team1Dto);
+        TeamDto team2Dto = mapTeamToDto(match.getTeam2());
+        squads.add(team2Dto);
+
+        matchDetailsDto.setSquads(squads);
+        return  matchDetailsDto;
     }
 
     private TeamDto mapTeamToDto(Team team) {
@@ -84,8 +97,8 @@ public class MatchServiceImpl implements MatchService {
         match.setId(matchDto.getId());
         match.setDate(matchDto.getDate());
         match.setVenue(matchDto.getVenue());
-        match.setTeam1(matchDto.getTeam1());
-        match.setTeam2(matchDto.getTeam2());
+        match.setTeam1(teamRepository.findTeamByName(matchDto.getTeam1()));
+        match.setTeam2(teamRepository.findTeamByName(matchDto.getTeam2()));
         return match;
     }
 }

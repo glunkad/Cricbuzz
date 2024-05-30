@@ -1,6 +1,7 @@
 package com.example.Cricbuzz.controller;
 
 
+import com.example.Cricbuzz.dto.MatchDetailsDto;
 import com.example.Cricbuzz.dto.MatchDto;
 import com.example.Cricbuzz.model.Match;
 import com.example.Cricbuzz.service.MatchService;
@@ -31,10 +32,10 @@ public class MatchController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MatchDto> matchDetail(
+    public ResponseEntity<MatchDetailsDto> matchDetail(
             @PathVariable long id
     ) {
-        return  ResponseEntity.ok(matchService.getMatchById(id));
+        return  new ResponseEntity<>(matchService.getMatchById(id), HttpStatus.OK);
     }
 
     @PostMapping("/")

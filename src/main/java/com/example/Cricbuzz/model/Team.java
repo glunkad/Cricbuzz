@@ -20,7 +20,7 @@ public class Team {
     @Column(name="team_name")
     private String name;
 
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "team",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Player> playerList;
 
 }

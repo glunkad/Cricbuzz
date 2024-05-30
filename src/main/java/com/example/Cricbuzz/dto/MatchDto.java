@@ -28,5 +28,5 @@ public class MatchDto {
     private String team2;
 
 //    private List<Team> squads;
-    private List<TeamDto> squads;
+//    private List<TeamDto> squads;
 }
