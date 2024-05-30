@@ -33,7 +33,10 @@ public class Player {
     @Column(name="strike_rate")
     private float strikeRate;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @Column(name = "role")
+    public String role;
+
+    @ManyToOne
     @JoinColumn(name = "team_id")
     private Team team;
 }
