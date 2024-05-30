@@ -1,8 +1,13 @@
 package com.example.Cricbuzz.service.impl;
 
 import com.example.Cricbuzz.dto.MatchDto;
+import com.example.Cricbuzz.dto.PlayerDto;
+import com.example.Cricbuzz.dto.TeamDto;
+import com.example.Cricbuzz.dto.TeamPlayerDto;
 import com.example.Cricbuzz.exception.MatchNotFoundException;
 import com.example.Cricbuzz.model.Match;
+import com.example.Cricbuzz.model.Player;
+import com.example.Cricbuzz.model.Team;
 import com.example.Cricbuzz.repository.MatchRepository;
 import com.example.Cricbuzz.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +54,30 @@ public class MatchServiceImpl implements MatchService {
         matchDto.setVenue(match.getVenue());
         matchDto.setTeam1(match.getTeam1());
         matchDto.setTeam2(match.getTeam2());
+        if(match.getSquad() == null){
+            match.setSquad(null);
+        } else{
+            List<TeamDto> teamDtoList = match.getSquad().stream().map((team) -> mapTeamToDto(team)).collect(Collectors.toList());
+            matchDto.setSquads(teamDtoList);
+        }
         return matchDto;
     }
+
+    private TeamDto mapTeamToDto(Team team) {
+        TeamDto teamDto = new TeamDto();
+        teamDto.setName(team.getName());
+        List<TeamPlayerDto> teamPlayerDtoList = team.getPlayerList().stream().map((player) -> mapTeamPlayerToDto(player)).collect(Collectors.toList());
+        teamDto.setPlayerList(teamPlayerDtoList);
+        return teamDto;
+    }
+
+    private TeamPlayerDto mapTeamPlayerToDto(Player player) {
+        TeamPlayerDto teamPlayerDto = new TeamPlayerDto();
+        teamPlayerDto.setName(player.getName());
+        teamPlayerDto.setRole(player.getRole());
+        return teamPlayerDto;
+    }
+
 
     private Match mapToEntity(MatchDto matchDto) {
         Match match  = new Match();

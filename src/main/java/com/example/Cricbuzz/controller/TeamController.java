@@ -1,6 +1,7 @@
 package com.example.Cricbuzz.controller;
 
 import com.example.Cricbuzz.dto.PlayerDto;
+import com.example.Cricbuzz.dto.TeamDto;
 import com.example.Cricbuzz.dto.TeamPlayerDto;
 import com.example.Cricbuzz.model.Player;
 import com.example.Cricbuzz.repository.TeamRepository;
@@ -29,7 +30,14 @@ public class TeamController {
             @PathVariable long team_id,
             @RequestBody TeamPlayerDto teamPlayerDto
     ) {
-        return new ResponseEntity<>(teamService.addPlayerToTeam(team_id,teamPlayerDto), HttpStatus.OK);
+        return new ResponseEntity<>(teamService.addPlayerToTeam(team_id,teamPlayerDto), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/")
+    public ResponseEntity<TeamDto> addTeam(
+            @RequestBody TeamDto teamDto
+    ) {
+        return new ResponseEntity<>(teamService.addTeam(teamDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/{team_id}/squad")

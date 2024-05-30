@@ -1,5 +1,6 @@
 package com.example.Cricbuzz.service.impl;
 
+import com.example.Cricbuzz.dto.TeamDto;
 import com.example.Cricbuzz.dto.TeamPlayerDto;
 import com.example.Cricbuzz.exception.PlayerNotFoundException;
 import com.example.Cricbuzz.exception.TeamNotFoundException;
@@ -51,5 +52,26 @@ public class TeamServiceImpl implements TeamService {
         return playerList.stream()
                 .map(player -> new TeamPlayerDto(player.getName(), player.getRole()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public TeamDto addTeam(TeamDto teamDto) {
+        Team team = mapToEntity(teamDto);
+        teamRepository.save(team);
+        return mapToDto(team);
+    }
+
+    public TeamDto mapToDto(Team team){
+        TeamDto teamDto = new TeamDto();
+        teamDto.setName(team.getName());
+//        teamDto.setPlayerList(team.getPlayerList());
+        return teamDto;
+    }
+
+    public Team mapToEntity(TeamDto teamDto){
+        Team team = new Team();
+        team.setName(teamDto.getName());
+//        team.setPlayerList(teamDto.getPlayerList());
+        return team;
     }
 }

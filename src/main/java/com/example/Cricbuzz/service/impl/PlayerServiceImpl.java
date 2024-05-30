@@ -42,25 +42,25 @@ public class PlayerServiceImpl implements PlayerService {
         return mapToDto(player);
     }
 
-    private PlayerDto mapToDto(Player Player) {
+    private PlayerDto mapToDto(Player player) {
         PlayerDto PlayerDto  = new PlayerDto();
-        PlayerDto.setId(Player.getId());
-        PlayerDto.setName(Player.getName());
-        PlayerDto.setMatchesPlayed(Player.getMatchesPlayed());
-        PlayerDto.setRuns(Player.getRuns());
-        PlayerDto.setAverage(Player.getAverage());
-        PlayerDto.setStrikeRate(Player.getStrikeRate());
+        PlayerDto.setId(player.getId());
+        PlayerDto.setName(player.getName());
+        PlayerDto.setMatchesPlayed(player.getMatchesPlayed());
+        PlayerDto.setRuns(player.getRuns());
+        PlayerDto.setAverage(player.getAverage());
+        PlayerDto.setStrikeRate(player.getStrikeRate());
         return PlayerDto;
     }
 
-    private Player mapToEntity(PlayerDto PlayerDto) {
+    private Player mapToEntity(PlayerDto playerDto) {
         Player Player  = new Player();
-        Player.setId(PlayerDto.getId());
-        Player.setName(PlayerDto.getName());
-        Player.setMatchesPlayed(PlayerDto.getMatchesPlayed());
-        Player.setRuns(PlayerDto.getRuns());
-        Player.setAverage(PlayerDto.getAverage());
-        Player.setStrikeRate(PlayerDto.getStrikeRate());
+        Player.setId(playerDto.getId());
+        Player.setName(playerDto.getName());
+        Player.setMatchesPlayed(playerDto.getMatchesPlayed());
+        Player.setRuns(playerDto.getRuns());
+        Player.setAverage(playerDto.getAverage());
+        Player.setStrikeRate(playerDto.getStrikeRate());
         return Player;
     }
 

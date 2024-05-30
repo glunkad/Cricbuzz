@@ -14,7 +14,8 @@ import java.util.List;
 @Builder
 public class TeamDto {
 
+    private String name;
 
-    private List<Player> playerList;
-
+//    private List<PlayerDto> playerList;
+    private List<TeamPlayerDto> playerList;
 }
