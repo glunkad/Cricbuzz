@@ -42,8 +42,8 @@ You are tasked with designing an API for a platform similar to Cricbuzz. Guest u
 
 1. **Clone the repository**:
     ```bash
-    git clone <repository_url>
-    cd <repository_directory>
+    git clone https://github.com/glunkad/Cricbuzz.git
+    cd Cricbuzz
     ```
 
 2. **Configure MySQL Database**:
@@ -100,10 +100,12 @@ You are tasked with designing an API for a platform similar to Cricbuzz. Guest u
 - **Request Body**:
     ```json
     {
-        "team1": "Team A",
-        "team2": "Team B",
-        "date": "2024-06-02"
+      "team1": "South Africa",
+      "team2": "New Zealand",
+      "venue": "Newlands Cricket Ground",
+      "date": "2024-07-10"
     }
+
     ```
 
 ### 4. Get Match Schedules
@@ -112,26 +114,55 @@ You are tasked with designing an API for a platform similar to Cricbuzz. Guest u
 - **Response**:
     ```json
     [
-        {
-            "matchId": 1,
-            "team1": "Team A",
-            "team2": "Team B",
-            "date": "2024-06-02"
-        }
+      {
+          "id": 1,
+          "venue": "Newlands Cricket Ground",
+          "date": "2024-07-10",
+          "team1": "South Africa",
+          "team2": "New Zealand"
+      }
     ]
     ```
 
 ### 5. Get Match Details
 - **Endpoint**: `GET /api/matches/{id}`
 - **Description**: Get details of a particular match (Guest and Admin).
-- **Response**:
-    ```json
+  - **Response**:
+      ```json
     {
-        "matchId": 1,
-        "team1": "Team A",
-        "team2": "Team B",
-        "date": "2024-06-02",
-        "score": "250/8"
+      "id": 1,
+      "venue": "Newlands Cricket Ground",
+      "date": "2024-07-10",
+      "team1": "South Africa",
+      "team2": "New Zealand",
+      "squads": [
+          {
+              "name": "South Africa",
+              "playerList": [
+                  {
+                      "name": "Quinton de Kock",
+                      "role": "Batsman"
+                  },
+                  {
+                      "name": "Kagiso Rabada",
+                      "role": "Bowler"
+                  }
+              ]
+          },
+          {
+              "name": "New Zealand",
+              "playerList": [
+                  {
+                      "name": "Kane Williamson",
+                      "role": "Batsman"
+                  },
+                  {
+                      "name": "Trent Boult",
+                      "role": "Bowler"
+                  }
+              ]
+          }
+      ]
     }
     ```
 
@@ -154,11 +185,13 @@ You are tasked with designing an API for a platform similar to Cricbuzz. Guest u
 - **Response**:
     ```json
     {
-        "playerId": 1,
-        "playerName": "Player 1",
-        "matches": 50,
-        "runs": 2000,
-        "wickets": 50
+        "id": 1,
+        "name": "Quinton de Kock",
+        "matchesPlayed": 121,
+        "runs": 5238,
+        "average": 45.66,
+        "strikeRate": 90.63,
+        "role": null
     }
     ```
 
